@@ -1,0 +1,3 @@
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/cmake-build-debug/CMakeFiles/UPR_projekt.dir
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/cmake-build-debug/CMakeFiles/rebuild_cache.dir
