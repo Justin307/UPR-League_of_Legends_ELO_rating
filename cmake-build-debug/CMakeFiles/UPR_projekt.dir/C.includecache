@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/lol.c
+stdio.h
+-
+stdlib.h
+-
+stdbool.h
+-
+string.h
+-
+lol.h
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/lol.h
+
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/lol.h
+

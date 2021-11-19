@@ -3,4 +3,4 @@ project(UPR_projekt C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(UPR_projekt main.c)
+add_executable(UPR_projekt main.c lol.c lol.h)

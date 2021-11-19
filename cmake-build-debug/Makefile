@@ -118,6 +118,30 @@ UPR_projekt\fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\build
 .PHONY : UPR_projekt\fast
 
+lol.obj: lol.c.obj
+.PHONY : lol.obj
+
+# target to build an object file
+lol.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\lol.c.obj
+.PHONY : lol.c.obj
+
+lol.i: lol.c.i
+.PHONY : lol.i
+
+# target to preprocess a source file
+lol.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\lol.c.i
+.PHONY : lol.c.i
+
+lol.s: lol.c.s
+.PHONY : lol.s
+
+# target to generate assembly for a file
+lol.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\lol.c.s
+.PHONY : lol.c.s
+
 main.obj: main.c.obj
 .PHONY : main.obj
 
@@ -151,6 +175,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... UPR_projekt
+	@echo ... lol.obj
+	@echo ... lol.i
+	@echo ... lol.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
