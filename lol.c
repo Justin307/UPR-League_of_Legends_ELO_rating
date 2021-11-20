@@ -6,6 +6,8 @@
 
 #include "lol.h"
 
+//TODO FILE CLOSING
+
 /**
  * Check if the structure inside the file is ok or if the file isn't empty
  * File containing players id and name
@@ -69,12 +71,13 @@ bool checkPlayerFileStructure(char* fileName)
 /**
  * Check if the structure inside the file is ok or if the file isn't empty
  * File containing history of games
- * @param fileName String - Name of the file
+ * @param fileNameGames String - Name of the file with games history
+ * @param fileNameGames String - Name of the file with players names and ids
  * @return true if file structure is ok / else if file structure is not ok
  */
-bool checkGameFileStructure(char* fileName)
+bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
 {
-    FILE* file = fopen(fileName,"r");
+    FILE* file = fopen(fileNameGames,"r");
     if(!file)
     {
         printf("File could not be opened");
@@ -115,7 +118,7 @@ bool checkGameFileStructure(char* fileName)
         //some line didn't match
         if(fsOutput[0] != 1 || fsOutput[1] != 3 || fsOutput[2] != 9 || fsOutput[3] != 3 || fsOutput[4] != 9 || fsOutput[5] != 1)
         {
-            printf("Structure of file %s is wrong",fileName);
+            printf("Structure of file %s is wrong",fileNameGames);
             return false;
         }
 
@@ -140,10 +143,16 @@ bool checkGameFileStructure(char* fileName)
         {
             if (ids[i] == ids[i + 1])
             {
-                printf("Players ID was found multiplke times in one match");
+                printf("Players ID was found multiple times in one match");
                 return false;
             }
         }
+
+        if(checkIDExistence(fileNamePlayers,ids) == false)
+        {
+            return false;
+        }
+
 
         //Check color of winning team
         if(!(strcmp("red",color) == 0 || strcmp("blue",color) == 0))
@@ -162,11 +171,91 @@ bool checkGameFileStructure(char* fileName)
 }
 
 /**
+ * Check if all players in the match are in the player file
+ * @param fileName String - name of files with player names and ids
+ * @param ids int[] - IDs of player in match
+ * @return true - all IDs exist / false - some id doesn't exist
+ */
+bool checkIDExistence(char* fileName, int ids[])
+{
+    int *playerIds;
+    int playersCount = fileLines(fileName);
+    playerIds = (int*) malloc(sizeof(int) * playersCount);
+
+    FILE* file = fopen(fileName,"r");
+    if(file == NULL)
+    {
+        printf("File doesn't exist");
+        return false;
+    }
+    char temp[100];
+    for(int i  = 0; i < playersCount; i++)
+    {
+        fscanf(file,"%d,%s",&playerIds[i],temp);
+    }
+
+    for(int i  = 0; i < 6; i++)
+    {
+        for(int j = 0; j <= playersCount; j++)
+        {
+            if(ids[i] == playerIds[j])
+            {
+                break;
+            }
+            if(j == playersCount)
+            {
+                fclose(file);
+                printf("Nonexistent player id found in match");
+                return false;
+            }
+        }
+    }
+
+    fclose(file);
+
+    return true;
+}
+
+/**
  * Compare function for qsort()
+ * @param x void* - address of first number
+ * @param y void* - address of second number
+ * @return 0 - numbers are the same / >0 - first number is larger / <0 - second number is larger
  */
 int compare_function (const void *x, const void *y)
 {
     int* a = (int*) x;
     int* b = (int*) y;
     return  *a - *b;
+}
+
+/**
+ * Return number of lines in file
+ * @param fileName String - name of file
+ * @return -1 - file doesn't exist / 0 - file is empty / >0 - number of lines in file
+ */
+int fileLines(char* fileName)
+{
+    FILE* file = fopen(fileName,"r");
+    if(file == NULL)
+    {
+        printf("File doesn't exist");
+        return -1;
+    }
+
+    char ch;
+    int lines = 0;
+
+    while(!feof(file))
+    {
+        ch = fgetc(file);
+        if(ch == '\n')
+        {
+            lines++;
+        }
+    }
+
+    fclose(file);
+
+    return lines+1;
 }

@@ -27,7 +27,7 @@ int main(int argc, char * argv[])
         return 1;
     }
 
-    if(!(checkGameFileStructure(argv[1])))
+    if(!(checkGameFileStructure(argv[1],argv[2])))
     {
         return 1;
     }
