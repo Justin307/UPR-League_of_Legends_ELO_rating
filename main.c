@@ -1,10 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 #include "lol.h"
 
 bool checkFileExistence(const char *fileName);
 
+//argv[1] - file with games / argv[2] - file with players / argv[3] - output file
 int main(int argc, char * argv[])
 {
     if((argc-1) < 3)
@@ -32,6 +34,13 @@ int main(int argc, char * argv[])
         return 1;
     }
 
+    int playerCount = fileLines(argv[2]);
+
+    Player *players;
+    players = (Player*) malloc(sizeof (Player) * playerCount);
+
+    initializePlayers(players,playerCount,argv[2]);
+    printPlayersToConsole(players,playerCount);
     return 0;
 }
 

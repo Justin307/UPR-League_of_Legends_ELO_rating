@@ -7,6 +7,7 @@
 #include "lol.h"
 
 //TODO FILE CLOSING
+//TODO CHECK NICKNAME LENGTH
 
 /**
  * Check if the structure inside the file is ok or if the file isn't empty
@@ -176,11 +177,10 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
  * @param ids int[] - IDs of player in match
  * @return true - all IDs exist / false - some id doesn't exist
  */
-bool checkIDExistence(char* fileName, int ids[])
+bool checkIDExistence(char* fileName, const int ids[6])
 {
     int *playerIds;
-    int playersCount = fileLines(fileName);
-    playerIds = (int*) malloc(sizeof(int) * playersCount);
+    int playersCount;
 
     FILE* file = fopen(fileName,"r");
     if(file == NULL)
@@ -188,7 +188,12 @@ bool checkIDExistence(char* fileName, int ids[])
         printf("File doesn't exist");
         return false;
     }
+
+    playersCount = fileLines(fileName);
+    playerIds = (int*) malloc(sizeof(int) * playersCount);
+
     char temp[100];
+
     for(int i  = 0; i < playersCount; i++)
     {
         fscanf(file,"%d,%s",&playerIds[i],temp);
@@ -205,6 +210,8 @@ bool checkIDExistence(char* fileName, int ids[])
             if(j == playersCount)
             {
                 fclose(file);
+                free(playerIds);
+                playerIds = NULL;
                 printf("Nonexistent player id found in match");
                 return false;
             }
@@ -212,6 +219,8 @@ bool checkIDExistence(char* fileName, int ids[])
     }
 
     fclose(file);
+    free(playerIds);
+    playerIds = NULL;
 
     return true;
 }
@@ -259,3 +268,65 @@ int fileLines(char* fileName)
 
     return lines+1;
 }
+
+void initializePlayers(Player* players, int playerCount, char* fileName)
+{
+    FILE* file = fopen(fileName,"r");
+    if(!file)
+    {
+        printf("File could not be opened");
+        return;
+    }
+
+    int id;
+    char nickname[16];
+    for(int i = 0; i < playerCount; i++)
+    {
+        fscanf(file,"%d,%s", &id, nickname);
+        initializePlayerDefaultValue(&players[i],id,nickname);
+    }
+}
+
+void initializePlayerDefaultValue(Player* player, int id, char* nickname)
+{
+    player->id = id;
+    strcpy(player->nickname,nickname);
+    player->elo = 1000;
+    player->kills = 0;
+    player->assists = 0;
+    player->deaths = 0;
+    player->matchPlayed = 0;
+    player->matchWon = 0;
+    player->teamRed = 0;
+    player->teamBlue = 0;
+}
+
+void printPlayersToConsole(Player *players,int playerCount)
+{
+    for(int i = 0; i < playerCount; i++)
+    {
+        printf("ID: %d\n",players[i].id);
+        printf("Nickname: %s\n",players[i].nickname);
+        printf("ELO: %d\n",players[i].elo);
+        printf("K/D/A: %d/%d/%d\n",players[i].kills,players[i].deaths,players[i].assists);
+        printf("Match won/played: %d/%d\n",players[i].matchWon,players[i].matchPlayed);
+        printf("Team Red/Blue: %d/%d\n\n",players[i].teamRed,players[i].teamBlue);
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
