@@ -1,4 +1,3 @@
-//#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,6 +7,9 @@
 
 //TODO FILE CLOSING
 //TODO CHECK NICKNAME LENGTH
+//TODO PROCESS SECOND FILE
+//TODO TEST EVERYTHING
+//TODO OUTPUT TO FILE
 
 /**
  * Check if the structure inside the file is ok or if the file isn't empty
@@ -87,7 +89,7 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
 
     char match[50];
     int ids[2*3];
-    int kda[2*9];
+    int kad[2 * 9];
     char color[20];
     int fsOutput[6];
     bool firstLine = true;
@@ -102,9 +104,9 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
         */
         fsOutput[0] = fscanf(file,"%s",match);
         fsOutput[1] = fscanf(file,"%d,%d,%d",&ids[0],&ids[1],&ids[2]);
-        fsOutput[2] = fscanf(file,"%d;%d;%d,%d;%d;%d,%d;%d;%d",&kda[0],&kda[1],&kda[2],&kda[3],&kda[4],&kda[5],&kda[6],&kda[7],&kda[8]);
+        fsOutput[2] = fscanf(file, "%d;%d;%d,%d;%d;%d,%d;%d;%d", &kad[0], &kad[1], &kad[2], &kad[3], &kad[4], &kad[5], &kad[6], &kad[7], &kad[8]);
         fsOutput[3] = fscanf(file,"%d,%d,%d",&ids[3],&ids[4],&ids[5]);
-        fsOutput[4] = fscanf(file,"%d;%d;%d,%d;%d;%d,%d;%d;%d",&kda[9],&kda[10],&kda[11],&kda[12],&kda[13],&kda[14],&kda[15],&kda[16],&kda[17]);
+        fsOutput[4] = fscanf(file, "%d;%d;%d,%d;%d;%d,%d;%d;%d", &kad[9], &kad[10], &kad[11], &kad[12], &kad[13], &kad[14], &kad[15], &kad[16], &kad[17]);
         fsOutput[5] = fscanf(file,"%s",color);
 
         // empty file
@@ -126,9 +128,9 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
         //test printf
         printf("%s\n",match);
         printf("%d %d %d\n",ids[0],ids[1],ids[2]);
-        printf("%d %d %d %d %d %d %d %d %d\n",kda[0],kda[1],kda[2],kda[3],kda[4],kda[5],kda[6],kda[7],kda[8]);
+        printf("%d %d %d %d %d %d %d %d %d\n", kad[0], kad[1], kad[2], kad[3], kad[4], kad[5], kad[6], kad[7], kad[8]);
         printf("%d %d %d\n",ids[3],ids[4],ids[5]);
-        printf("%d %d %d %d %d %d %d %d %d\n",kda[9],kda[10],kda[11],kda[12],kda[13],kda[14],kda[15],kda[16],kda[17]);
+        printf("%d %d %d %d %d %d %d %d %d\n", kad[9], kad[10], kad[11], kad[12], kad[13], kad[14], kad[15], kad[16], kad[17]);
         printf("%s\n\n",color);
 
         //Check for the word "match"
@@ -312,6 +314,65 @@ void printPlayersToConsole(Player *players,int playerCount)
         printf("Match won/played: %d/%d\n",players[i].matchWon,players[i].matchPlayed);
         printf("Team Red/Blue: %d/%d\n\n",players[i].teamRed,players[i].teamBlue);
 
+    }
+}
+
+void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
+{
+    FILE* file = fopen(fileName,"r");
+    if(!file)
+    {
+        printf("File could not be opened");
+        return;
+    }
+
+    char match[6];
+    int ids[2*3];
+    int kad[2*9];
+    char color[5];
+    int playerStructID = 0;
+
+    //TODO SECURE MATCH COUNT
+    while(!feof(file))
+    {
+        fscanf(file,"%s",match);
+        fscanf(file,"%d,%d,%d",&ids[0],&ids[1],&ids[2]);
+        fscanf(file, "%d;%d;%d,%d;%d;%d,%d;%d;%d", &kad[0], &kad[1], &kad[2], &kad[3], &kad[4], &kad[5], &kad[6], &kad[7], &kad[8]);
+        fscanf(file,"%d,%d,%d",&ids[3],&ids[4],&ids[5]);
+        fscanf(file, "%d;%d;%d,%d;%d;%d,%d;%d;%d", &kad[9], &kad[10], &kad[11], &kad[12], &kad[13], &kad[14], &kad[15], &kad[16], &kad[17]);
+        fscanf(file,"%s",color);
+
+        for(int i = 0; i < 6; i++)
+        {
+            for(int j = 0; j < playerCount; j++)
+            {
+                if(ids[i] == players[j].id)
+                {
+                    playerStructID = j;
+                    break;
+                }
+            }
+            players[playerStructID].kills += kad[i*3+0];
+            players[playerStructID].assists += kad[i*3+1];
+            players[playerStructID].deaths += kad[i*3+2];
+            players[playerStructID].matchPlayed +=1;
+            if(i<3)
+            {
+                players[playerStructID].teamRed +=1;
+                if(!strcmp(color,"red"))
+                {
+                    players[playerStructID].matchWon +=1;
+                }
+            }
+            else
+            {
+                players[playerStructID].teamBlue +=1;
+                if(!strcmp(color,"blue"))
+                {
+                    players[playerStructID].matchWon +=1;
+                }
+            }
+        }
     }
 }
 

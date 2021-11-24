@@ -41,6 +41,11 @@ int main(int argc, char * argv[])
 
     initializePlayers(players,playerCount,argv[2]);
     printPlayersToConsole(players,playerCount);
+    updatePlayersFromMatchFile(players,playerCount,argv[1]);
+    printPlayersToConsole(players,playerCount);
+
+    free(players);
+    players = NULL;
     return 0;
 }
 

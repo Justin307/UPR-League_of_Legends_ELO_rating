@@ -23,6 +23,7 @@ int fileLines(char* fileName);
 void initializePlayers(Player* players, int playerCount, char* fileName);
 void initializePlayerDefaultValue(Player* player, int id, char* nickname);
 void printPlayersToConsole(Player *players,int playerCount);
+void updatePlayersFromMatchFile(Player *players,int playerCount, char* filename);
 
 
 #endif //UPR_PROJEKT_LOL_H
