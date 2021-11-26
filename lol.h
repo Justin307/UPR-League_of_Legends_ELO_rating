@@ -24,6 +24,7 @@ void initializePlayers(Player* players, int playerCount, char* fileName);
 void initializePlayerDefaultValue(Player* player, int id, char* nickname);
 void printPlayersToConsole(Player *players,int playerCount);
 void updatePlayersFromMatchFile(Player *players,int playerCount, char* filename);
+int getELOOfPlayer(int id, Player *players, int playerCount);
 
 
 #endif //UPR_PROJEKT_LOL_H

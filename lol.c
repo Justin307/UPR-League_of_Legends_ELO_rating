@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 
 #include "lol.h"
 
@@ -331,6 +332,11 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
     int kad[2*9];
     char color[5];
     int playerStructID = 0;
+    int opponentsELO;
+    int playerELO;
+    int didHeWon;
+    int coefficient = 30;
+    float playerMatchELO;
 
     //TODO SECURE MATCH COUNT
     while(!feof(file))
@@ -362,7 +368,18 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
                 if(!strcmp(color,"red"))
                 {
                     players[playerStructID].matchWon +=1;
+                    didHeWon = 1;
                 }
+                else
+                {
+                    didHeWon = 0;
+                }
+
+                playerELO = getELOOfPlayer(ids[i],players,playerCount);
+                opponentsELO = (getELOOfPlayer(ids[3],players,playerCount) + getELOOfPlayer(ids[4],players,playerCount) + getELOOfPlayer(ids[3],players,playerCount)) / 3.0;
+                playerMatchELO = 1 / (1 + pow(10,(opponentsELO-playerELO)/400));
+                players[playerStructID].elo = playerELO + coefficient * (didHeWon - playerMatchELO);
+
             }
             else
             {
@@ -370,10 +387,32 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
                 if(!strcmp(color,"blue"))
                 {
                     players[playerStructID].matchWon +=1;
+                    didHeWon = 1;
                 }
+                else {
+                    didHeWon = 0;
+                }
+
+                playerELO = getELOOfPlayer(ids[i],players,playerCount);
+                opponentsELO = (getELOOfPlayer(ids[0],players,playerCount) + getELOOfPlayer(ids[1],players,playerCount) + getELOOfPlayer(ids[2],players,playerCount)) / 3.0;
+                playerMatchELO = 1 / (1 + pow(10,(opponentsELO-playerELO)/400));
+                players[playerStructID].elo = playerELO + coefficient * (didHeWon - playerMatchELO);
             }
         }
     }
+}
+
+int getELOOfPlayer(int id, Player *players, int playerCount)
+{
+    for(int i = 0; i < playerCount; i++)
+    {
+        if(id == players[i].id)
+        {
+
+            return players[i].elo;
+        }
+    }
+    return 1000;
 }
 
 
