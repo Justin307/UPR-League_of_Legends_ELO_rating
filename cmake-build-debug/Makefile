@@ -118,6 +118,30 @@ UPR_projekt\fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\build
 .PHONY : UPR_projekt\fast
 
+htmlwriter.obj: htmlwriter.c.obj
+.PHONY : htmlwriter.obj
+
+# target to build an object file
+htmlwriter.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\htmlwriter.c.obj
+.PHONY : htmlwriter.c.obj
+
+htmlwriter.i: htmlwriter.c.i
+.PHONY : htmlwriter.i
+
+# target to preprocess a source file
+htmlwriter.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\htmlwriter.c.i
+.PHONY : htmlwriter.c.i
+
+htmlwriter.s: htmlwriter.c.s
+.PHONY : htmlwriter.s
+
+# target to generate assembly for a file
+htmlwriter.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\htmlwriter.c.s
+.PHONY : htmlwriter.c.s
+
 lol.obj: lol.c.obj
 .PHONY : lol.obj
 
@@ -175,6 +199,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... UPR_projekt
+	@echo ... htmlwriter.obj
+	@echo ... htmlwriter.i
+	@echo ... htmlwriter.s
 	@echo ... lol.obj
 	@echo ... lol.i
 	@echo ... lol.s

@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 #include "lol.h"
+#include "htmlwriter.h"
 
 bool checkFileExistence(const char *fileName);
 
@@ -23,6 +24,7 @@ int main(int argc, char * argv[])
             return 1;
         }
     }
+
 
     if(!(checkPlayerFileStructure(argv[2])))
     {

@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/UPR_projekt.dir/htmlwriter.c.obj"
   "CMakeFiles/UPR_projekt.dir/lol.c.obj"
   "CMakeFiles/UPR_projekt.dir/main.c.obj"
   "UPR_projekt.exe"
