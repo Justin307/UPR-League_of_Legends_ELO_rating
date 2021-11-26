@@ -68,6 +68,24 @@ void writeTableTd(FILE* file, char* string)
     }
 }
 
+void writeTableTdBeginning(FILE* file)
+{
+    if(file != NULL)
+    {
+        char* template = "\t\t\t\t<td>";
+        fputs(template,file);
+    }
+}
+
+void writeTableTdEnd(FILE* file)
+{
+    if(file != NULL)
+    {
+        char* template = "</td>\n";
+        fputs(template,file);
+    }
+}
+
 void writeTableTrBeginning(FILE* file)
 {
     if(file != NULL)
@@ -85,4 +103,21 @@ void writeTableTrEnd(FILE* file)
         fputs(template, file);
     }
 }
+
+void writeInt(FILE* file, int x)
+{
+    if(file != NULL)
+    {
+        fprintf(file,"%d",x);
+    }
+}
+
+void writeChar(FILE* file, char c)
+{
+    if(file != NULL)
+    {
+        fputc(c, file);
+    }
+}
+
 

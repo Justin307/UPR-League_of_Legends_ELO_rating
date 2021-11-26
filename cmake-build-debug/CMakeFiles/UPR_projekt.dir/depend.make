@@ -4,6 +4,7 @@
 CMakeFiles\UPR_projekt.dir\htmlwriter.c.obj: ..\htmlwriter.c
 CMakeFiles\UPR_projekt.dir\htmlwriter.c.obj: ..\htmlwriter.h
 
+CMakeFiles\UPR_projekt.dir\lol.c.obj: ..\htmlwriter.h
 CMakeFiles\UPR_projekt.dir\lol.c.obj: ..\lol.c
 CMakeFiles\UPR_projekt.dir\lol.c.obj: ..\lol.h
 

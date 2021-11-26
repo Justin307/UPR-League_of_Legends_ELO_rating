@@ -46,6 +46,8 @@ int main(int argc, char * argv[])
     updatePlayersFromMatchFile(players,playerCount,argv[1]);
     printPlayersToConsole(players,playerCount);
 
+    createPlayerHTMLFile(argv[3],players,playerCount);
+
     free(players);
     players = NULL;
     return 0;

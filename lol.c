@@ -5,6 +5,7 @@
 #include <math.h>
 
 #include "lol.h"
+#include "htmlwriter.h"
 
 //TODO FILE CLOSING
 //TODO CHECK NICKNAME LENGTH
@@ -415,6 +416,84 @@ int getELOOfPlayer(int id, Player *players, int playerCount)
     return 1000;
 }
 
+char* getDivision(int elo)
+{
+    if(elo<=1149)
+        return "Bronze";
+    else if(elo<=1499)
+        return "Silver";
+    else if(elo<=1849)
+        return "Gold";
+    else if(elo<=2199)
+        return "Platinum";
+    else
+        return "Diamond";
+}
+
+bool createPlayerHTMLFile(char* fileName, Player* players, int playerCount)
+{
+    FILE* file = fopen(fileName,"w");
+    if(file == NULL)
+    {
+        printf("File couldn't be opened");
+        return false;
+    }
+
+    writeHeader(file);
+    writeTableTop(file);
+    writeTableTh(file,"#");
+    writeTableTh(file,"Nickname");
+    writeTableTh(file,"ELO rating");
+    writeTableTh(file,"Division");
+    writeTableTh(file,"K/D/A");
+    writeTableTh(file,"Match won/played");
+    writeTableTh(file,"Team red/blue");
+    writeTableMiddle(file);
+    for(int i = 0; i < playerCount; i++)
+    {
+        writeTableTrBeginning(file);
+
+        //ID
+        writeTableTdBeginning(file);
+        writeInt(file,players[i].id);
+        writeTableTdEnd(file);
+        //Nickname
+        writeTableTd(file,players[i].nickname);
+        //ELO
+        writeTableTdBeginning(file);
+        writeInt(file,players[i].elo);
+        writeTableTdEnd(file);
+        //Division
+        writeTableTd(file,getDivision(players[i].elo));
+        //K/D/A
+        writeTableTdBeginning(file);
+        writeInt(file,players[i].kills);
+        writeChar(file,'/');
+        writeInt(file,players[i].deaths);
+        writeChar(file,'/');
+        writeInt(file,players[i].assists);
+        writeTableTdEnd(file);
+        //Match won/played
+        writeTableTdBeginning(file);
+        writeInt(file,players[i].matchWon);
+        writeChar(file,'/');
+        writeInt(file,players[i].matchPlayed);
+        writeTableTdEnd(file);
+        //Team red/blue
+        writeTableTdBeginning(file);
+        writeInt(file,players[i].teamRed);
+        writeChar(file,'/');
+        writeInt(file,players[i].teamBlue);
+        writeTableTdEnd(file);
+
+        writeTableTrEnd(file);
+    }
+    writeTableBottom(file);
+    writeFooter(file);
+
+    fclose(file);
+    return true;
+}
 
 
 
