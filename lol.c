@@ -7,7 +7,6 @@
 #include "lol.h"
 #include "htmlwriter.h"
 
-//TODO CHECK NICKNAME LENGTH
 //TODO TEST EVERYTHING
 
 /**
@@ -60,10 +59,17 @@ bool checkPlayerFileStructure(char* fileName)
             return false;
         }
 
-        //test printf
-        printf("%d - %s\n", id,nickname);
+        if(strlen(nickname) > 16)
+        {
+            printf("At least one of the nicknames has more then 16 characters.");
+            fclose(file);
+            return false;
+        }
 
-        //not first line
+        //test printf
+        printf("%d - %s - %d\n", id,nickname, strlen(nickname));
+
+        //not first line anymore
         if(firstLine == true)
         {
             firstLine = false;
