@@ -3,16 +3,16 @@
 
 #include "htmlwriter.h"
 
-void writeHeader(FILE* file)
+void writeHtmlHeader(FILE* file)
 {
     if(file != NULL)
     {
-        char* template = "<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\t<title>LOL Player Table</title>\n\t<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\n</head>\n<body class=\"bg-dark\">\n";
+        char* template = "<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\t<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\n</head>\n<body class=\"bg-dark\">\n";
         fputs(template, file);
     }
 }
 
-void writeFooter(FILE* file)
+void WriteHtmlFooter(FILE* file)
 {
     if(file != NULL)
     {

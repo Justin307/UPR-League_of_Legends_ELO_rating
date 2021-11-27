@@ -7,11 +7,8 @@
 #include "lol.h"
 #include "htmlwriter.h"
 
-//TODO FILE CLOSING
 //TODO CHECK NICKNAME LENGTH
-//TODO PROCESS SECOND FILE
 //TODO TEST EVERYTHING
-//TODO OUTPUT TO FILE
 
 /**
  * Check if the structure inside the file is ok or if the file isn't empty
@@ -49,6 +46,7 @@ bool checkPlayerFileStructure(char* fileName)
             if(firstLine == true)
             {
                 printf("File is empty");
+                fclose(file);
                 return false;
             }
             break;
@@ -58,6 +56,7 @@ bool checkPlayerFileStructure(char* fileName)
         if(fsOutput != 2)
         {
             printf("Structure of file %s is wrong",fileName);
+            fclose(file);
             return false;
         }
 
@@ -70,6 +69,7 @@ bool checkPlayerFileStructure(char* fileName)
             firstLine = false;
         }
     }
+    fclose(file);
     return true;
 }
 
@@ -115,6 +115,7 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
         if (fsOutput[0] == -1) {
             if (firstLine == true) {
                 printf("File is empty");
+                fclose(file);
                 return false;
             }
             break;
@@ -124,6 +125,7 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
         if(fsOutput[0] != 1 || fsOutput[1] != 3 || fsOutput[2] != 9 || fsOutput[3] != 3 || fsOutput[4] != 9 || fsOutput[5] != 1)
         {
             printf("Structure of file %s is wrong",fileNameGames);
+            fclose(file);
             return false;
         }
 
@@ -139,6 +141,7 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
         if(strcmp("match",match) != 0)
         {
             printf("The word \"match\" wasn't found");
+            fclose(file);
             return false;
         }
 
@@ -149,12 +152,15 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
             if (ids[i] == ids[i + 1])
             {
                 printf("Players ID was found multiple times in one match");
+                fclose(file);
                 return false;
             }
         }
 
         if(checkIDExistence(fileNamePlayers,ids) == false)
         {
+            printf("Nonexistent player id found in match");
+            fclose(file);
             return false;
         }
 
@@ -163,6 +169,7 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
         if(!(strcmp("red",color) == 0 || strcmp("blue",color) == 0))
         {
             printf("Wrong color on the of the winning team");
+            fclose(file);
             return false;
         }
 
@@ -172,6 +179,7 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
             firstLine = false;
         }
     }
+    fclose(file);
     return true;
 }
 
@@ -216,7 +224,6 @@ bool checkIDExistence(char* fileName, const int ids[6])
                 fclose(file);
                 free(playerIds);
                 playerIds = NULL;
-                printf("Nonexistent player id found in match");
                 return false;
             }
         }
@@ -225,7 +232,6 @@ bool checkIDExistence(char* fileName, const int ids[6])
     fclose(file);
     free(playerIds);
     playerIds = NULL;
-
     return true;
 }
 
@@ -259,6 +265,11 @@ int fileLines(char* fileName)
     char ch;
     int lines = 0;
 
+    if(feof(file))
+    {
+        return lines;
+    }
+
     while(!feof(file))
     {
         ch = fgetc(file);
@@ -269,7 +280,6 @@ int fileLines(char* fileName)
     }
 
     fclose(file);
-
     return lines+1;
 }
 
@@ -289,6 +299,7 @@ void initializePlayers(Player* players, int playerCount, char* fileName)
         fscanf(file,"%d,%s", &id, nickname);
         initializePlayerDefaultValue(&players[i],id,nickname);
     }
+    fclose(file);
 }
 
 void initializePlayerDefaultValue(Player* player, int id, char* nickname)
@@ -315,7 +326,6 @@ void printPlayersToConsole(Player *players,int playerCount)
         printf("K/D/A: %d/%d/%d\n",players[i].kills,players[i].deaths,players[i].assists);
         printf("Match won/played: %d/%d\n",players[i].matchWon,players[i].matchPlayed);
         printf("Team Red/Blue: %d/%d\n\n",players[i].teamRed,players[i].teamBlue);
-
     }
 }
 
@@ -401,6 +411,8 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
             }
         }
     }
+
+    fclose(file);
 }
 
 int getELOOfPlayer(int id, Player *players, int playerCount)
@@ -409,7 +421,6 @@ int getELOOfPlayer(int id, Player *players, int playerCount)
     {
         if(id == players[i].id)
         {
-
             return players[i].elo;
         }
     }
@@ -439,7 +450,7 @@ bool createPlayerHTMLFile(char* fileName, Player* players, int playerCount)
         return false;
     }
 
-    writeHeader(file);
+    writeHtmlHeader(file);
     writeTableTop(file);
     writeTableTh(file,"#");
     writeTableTh(file,"Nickname");
@@ -489,7 +500,7 @@ bool createPlayerHTMLFile(char* fileName, Player* players, int playerCount)
         writeTableTrEnd(file);
     }
     writeTableBottom(file);
-    writeFooter(file);
+    WriteHtmlFooter(file);
 
     fclose(file);
     return true;

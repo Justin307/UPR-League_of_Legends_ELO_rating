@@ -3,7 +3,6 @@
 #include <stdbool.h>
 
 #include "lol.h"
-#include "htmlwriter.h"
 
 bool checkFileExistence(const char *fileName);
 
@@ -25,7 +24,6 @@ int main(int argc, char * argv[])
         }
     }
 
-
     if(!(checkPlayerFileStructure(argv[2])))
     {
         return 1;
@@ -39,7 +37,7 @@ int main(int argc, char * argv[])
     int playerCount = fileLines(argv[2]);
 
     Player *players;
-    players = (Player*) malloc(sizeof (Player) * playerCount);
+    players = (Player*) malloc(sizeof(Player) * playerCount);
 
     initializePlayers(players,playerCount,argv[2]);
     printPlayersToConsole(players,playerCount);

@@ -1,8 +1,8 @@
 #ifndef UPR_PROJEKT_HTMLWRITER_H
 #define UPR_PROJEKT_HTMLWRITER_H
 
-void writeHeader(FILE* file);
-void writeFooter(FILE* file);
+void writeHtmlHeader(FILE* file);
+void WriteHtmlFooter(FILE* file);
 void writeTableTop(FILE* file);
 void writeTableMiddle(FILE* file);
 void writeTableBottom(FILE* file);

@@ -8,7 +8,6 @@ CMakeFiles\UPR_projekt.dir\lol.c.obj: ..\htmlwriter.h
 CMakeFiles\UPR_projekt.dir\lol.c.obj: ..\lol.c
 CMakeFiles\UPR_projekt.dir\lol.c.obj: ..\lol.h
 
-CMakeFiles\UPR_projekt.dir\main.c.obj: ..\htmlwriter.h
 CMakeFiles\UPR_projekt.dir\main.c.obj: ..\lol.h
 CMakeFiles\UPR_projekt.dir\main.c.obj: ..\main.c
 
