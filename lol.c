@@ -6,8 +6,7 @@
 
 #include "lol.h"
 #include "htmlwriter.h"
-
-//TODO TEST EVERYTHING
+#include "generalhelper.h"
 
 /**
  * Check if the structure inside the file is ok or if the file isn't empty
@@ -241,54 +240,6 @@ bool checkIDExistence(char* fileName, const int ids[6])
     return true;
 }
 
-/**
- * Compare function for qsort()
- * @param x void* - address of first number
- * @param y void* - address of second number
- * @return 0 - numbers are the same / >0 - first number is larger / <0 - second number is larger
- */
-int compare_function (const void *x, const void *y)
-{
-    int* a = (int*) x;
-    int* b = (int*) y;
-    return  *a - *b;
-}
-
-/**
- * Return number of lines in file
- * @param fileName String - name of file
- * @return -1 - file doesn't exist / 0 - file is empty / >0 - number of lines in file
- */
-int fileLines(char* fileName)
-{
-    FILE* file = fopen(fileName,"r");
-    if(file == NULL)
-    {
-        printf("File doesn't exist");
-        return -1;
-    }
-
-    char ch;
-    int lines = 0;
-
-    if(feof(file))
-    {
-        return lines;
-    }
-
-    while(!feof(file))
-    {
-        ch = fgetc(file);
-        if(ch == '\n')
-        {
-            lines++;
-        }
-    }
-
-    fclose(file);
-    return lines+1;
-}
-
 void initializePlayers(Player* players, int playerCount, char* fileName)
 {
     FILE* file = fopen(fileName,"r");
@@ -337,13 +288,13 @@ void printPlayersToConsole(Player *players,int playerCount)
 
 void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
 {
+    int matchesRemaining = matchCount(fileName);
     FILE* file = fopen(fileName,"r");
     if(!file)
     {
         printf("File could not be opened");
         return;
     }
-
     char match[6];
     int ids[2*3];
     int kad[2*9];
@@ -355,8 +306,10 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
     int coefficient = 30;
     float playerMatchELO;
 
+
+
     //TODO SECURE MATCH COUNT
-    while(!feof(file))
+    while(matchesRemaining != 0)
     {
         fscanf(file,"%s",match);
         fscanf(file,"%d,%d,%d",&ids[0],&ids[1],&ids[2]);
@@ -364,6 +317,7 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
         fscanf(file,"%d,%d,%d",&ids[3],&ids[4],&ids[5]);
         fscanf(file, "%d;%d;%d,%d;%d;%d,%d;%d;%d", &kad[9], &kad[10], &kad[11], &kad[12], &kad[13], &kad[14], &kad[15], &kad[16], &kad[17]);
         fscanf(file,"%s",color);
+        matchesRemaining--;
 
         for(int i = 0; i < 6; i++)
         {
@@ -510,6 +464,28 @@ bool createPlayerHTMLFile(char* fileName, Player* players, int playerCount)
 
     fclose(file);
     return true;
+}
+
+int matchCount(char* fileName)
+{
+    FILE* file = fopen(fileName,"r");
+    int matchCount = 0;
+    if(file != NULL)
+    {
+        char string[51];
+        while(!feof(file))
+        {
+            fscanf(file,"%s",string);
+            if(strcmp(string,"match") == 0)
+                matchCount++;
+        }
+    }
+    else
+    {
+        printf("File doesn't exist\n");
+    }
+    fclose(file);
+    return matchCount;
 }
 
 

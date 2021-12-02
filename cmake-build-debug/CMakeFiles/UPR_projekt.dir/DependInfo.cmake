@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/generalhelper.c" "C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/cmake-build-debug/CMakeFiles/UPR_projekt.dir/generalhelper.c.obj"
   "C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/htmlwriter.c" "C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/cmake-build-debug/CMakeFiles/UPR_projekt.dir/htmlwriter.c.obj"
   "C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/lol.c" "C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/cmake-build-debug/CMakeFiles/UPR_projekt.dir/lol.c.obj"
   "C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/main.c" "C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/cmake-build-debug/CMakeFiles/UPR_projekt.dir/main.c.obj"

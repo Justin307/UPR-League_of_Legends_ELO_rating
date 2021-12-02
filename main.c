@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #include "lol.h"
-
-bool checkFileExistence(const char *fileName);
+#include "generalhelper.h"
 
 //argv[1] - file with games / argv[2] - file with players / argv[3] - output file
 int main(int argc, char * argv[])
@@ -49,23 +47,4 @@ int main(int argc, char * argv[])
     free(players);
     players = NULL;
     return 0;
-}
-
-/**
- * Check if a file exist or not
- * @param fileName string - Name of the file
- * @return true if file exist /  else if file doesn't exist
- */
-bool checkFileExistence(const char *fileName)
-{
-    FILE* file;
-    if((file = fopen(fileName, "r")))
-    {
-        fclose(file);
-        return true;
-    }
-    else
-    {
-        return false;
-    }
 }

@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/generalhelper.c
+stdio.h
+-
+stdbool.h
+-
+generalhelper.h
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/generalhelper.h
+
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/generalhelper.h
+stdbool.h
+-
+
 C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/htmlwriter.h
 
 C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/lol.c
@@ -23,6 +35,20 @@ lol.h
 C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/lol.h
 htmlwriter.h
 C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/htmlwriter.h
+generalhelper.h
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/generalhelper.h
 
 C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/lol.h
+stdbool.h
+-
+
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/main.c
+stdio.h
+-
+stdlib.h
+-
+lol.h
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/lol.h
+generalhelper.h
+C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/generalhelper.h
 

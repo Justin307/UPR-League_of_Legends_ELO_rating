@@ -118,6 +118,30 @@ UPR_projekt\fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\build
 .PHONY : UPR_projekt\fast
 
+generalhelper.obj: generalhelper.c.obj
+.PHONY : generalhelper.obj
+
+# target to build an object file
+generalhelper.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\generalhelper.c.obj
+.PHONY : generalhelper.c.obj
+
+generalhelper.i: generalhelper.c.i
+.PHONY : generalhelper.i
+
+# target to preprocess a source file
+generalhelper.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\generalhelper.c.i
+.PHONY : generalhelper.c.i
+
+generalhelper.s: generalhelper.c.s
+.PHONY : generalhelper.s
+
+# target to generate assembly for a file
+generalhelper.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\UPR_projekt.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\UPR_projekt.dir\generalhelper.c.s
+.PHONY : generalhelper.c.s
+
 htmlwriter.obj: htmlwriter.c.obj
 .PHONY : htmlwriter.obj
 
@@ -199,6 +223,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... UPR_projekt
+	@echo ... generalhelper.obj
+	@echo ... generalhelper.i
+	@echo ... generalhelper.s
 	@echo ... htmlwriter.obj
 	@echo ... htmlwriter.i
 	@echo ... htmlwriter.s

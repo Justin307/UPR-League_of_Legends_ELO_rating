@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/generalhelper.c">
+			<Option target="UPR_projekt"/>
+		</Unit>
+		<Unit filename="C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/generalhelper.h">
+			<Option target="UPR_projekt"/>
+		</Unit>
 		<Unit filename="C:/Users/ondra/OneDrive/Dokumenty/C/1. semestr/UPR projekt/htmlwriter.c">
 			<Option target="UPR_projekt"/>
 		</Unit>
