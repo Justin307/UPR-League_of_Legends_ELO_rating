@@ -34,38 +34,3 @@ int compare_function (const void *x, const void *y)
     int* b = (int*) y;
     return  *a - *b;
 }
-
-/**
- * Return number of lines in file
- * @param fileName String - name of file
- * @return -1 - file doesn't exist / 0 - file is empty / >0 - number of lines in file
- */
-int fileLines(char* fileName)
-{
-    FILE* file = fopen(fileName,"r");
-    if(file == NULL)
-    {
-        printf("File doesn't exist");
-        return -1;
-    }
-
-    char ch;
-    int lines = 0;
-
-    if(feof(file))
-    {
-        return lines;
-    }
-
-    while(!feof(file))
-    {
-        ch = fgetc(file);
-        if(ch == '\n')
-        {
-            lines++;
-        }
-    }
-
-    fclose(file);
-    return lines+1;
-}

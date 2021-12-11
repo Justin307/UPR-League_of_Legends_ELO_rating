@@ -32,7 +32,7 @@ int main(int argc, char * argv[])
         return 1;
     }
 
-    int playerCount = fileLines(argv[2]);
+    int playerCount = countPlayers(argv[2]);
 
     Player *players;
     players = (Player*) malloc(sizeof(Player) * playerCount);

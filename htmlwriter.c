@@ -111,6 +111,16 @@ void writeInt(FILE* file, int x)
     }
 }
 
+void writeFloat(FILE* file, float x)
+{
+    if(file != NULL)
+    {
+        fprintf(file,"%.2f",x);
+    }
+}
+
+
+
 void writeChar(FILE* file, char c)
 {
     if(file != NULL)

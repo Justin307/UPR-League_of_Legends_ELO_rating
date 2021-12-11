@@ -6,9 +6,9 @@ Napište program, který bude počítat rank, divizi a různé další statistik
 
   Program bude povinně akceptovat tři argumenty z příkazové řádky.
 
-      První argument bude obsahovat cestu k souboru se záznamy LoL her.
-      Druhý argument bude obsahovat cestu k souboru s přezdívkami hráčů.
-      Třetí argument bude obsahovat cestu k výstupnímu souboru.
+    První argument bude obsahovat cestu k souboru se záznamy LoL her.
+    Druhý argument bude obsahovat cestu k souboru s přezdívkami hráčů.
+    Třetí argument bude obsahovat cestu k výstupnímu souboru.
 
 
 ## Načtení dat:
@@ -25,31 +25,31 @@ Napište program, který bude počítat rank, divizi a různé další statistik
 
   Ukázkový obsah souboru se záznamy:
 
-      match
-      1,2,3
-      10;3;2,8;2;0,2;5;4
-      8,4,9
-      1;4;10,5;1;2,0;2;8
-      red
-      match
-      2,1,8
-      5;2;4,8;4;4,4;4;3
-      13,22,10
-      4;4;10,5;1;4,2;2;3
-      blue
+    match
+    1,2,3
+    10;3;2,8;2;0,2;5;4
+    8,4,9
+    1;4;10,5;1;2,0;2;8
+    red
+    match
+    2,1,8
+    5;2;4,8;4;4,4;4;3
+    13,22,10
+    4;4;10,5;1;4,2;2;3
+    blue
 
   Dále načtěte soubor s názvy hráčů. Na každém řádku souboru bude dvojice oddělená čárkou. Prvním členem dvojice bude **ID hráče** a druhým členem jeho **přezdívka**.
 
   Ukázkový obsah souboru s názvy hráčů:
   
-      1,darksider
-      2,yasuo4life
-      4,heimerdanger
+    1,darksider
+    2,yasuo4life
+    4,heimerdanger
       
   Obsah souboru použijte pro spárování ID hráčů s jejich přezdívkou při výpisu statistiky.
 
 
-Pokud vstupní data v jakémkoliv ze vstupních souborů nebudou odpovídat zadanému formátu, vypište chybu a ukončete program. Stejně tak zkontrolujte, jestli vstupní data dávají smysl (i kdyby byly ve správném formátu). Například nedává smysl, aby v rámci jednoho zápasu hrál hráč se stejným ID za více šampionů.
+  Pokud vstupní data v jakémkoliv ze vstupních souborů nebudou odpovídat zadanému formátu, vypište chybu a ukončete program. Stejně tak zkontrolujte, jestli vstupní data dávají smysl (i kdyby byly ve správném formátu). Například nedává smysl, aby v rámci jednoho zápasu hrál hráč se stejným ID za více šampionů.
 
 
 ## Výpočet statistiky:
@@ -90,3 +90,20 @@ Pokud vstupní data v jakémkoliv ze vstupních souborů nebudou odpovídat zada
   Vytvořte jednoduchý **README** soubor, který bude popisovat, jak program funguje a jak ho přeložit.
 
   Při vývoji používejte **Address sanitizer!** Velmi vám to usnadní detekci paměťových chyb. Odevzdaný program nesmí při použití Address sanitizeru vyvolat žádné paměťové chyby.
+
+
+## Spuštění programu
+
+  Příkazy do konzole:
+  
+    1. cd složka_se_soubory
+    2. cmake CMakeLists.txt
+    3. make 
+    4. ./UPR_projekt games.txt players.txt output.html
+
+  Výstupní soubor je typu **HTML**
+
+
+## Odkaz na github
+
+  https://github.com/Justin307/UPR-League_of_Legends_ELO_rating

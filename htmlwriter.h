@@ -13,6 +13,7 @@ void writeTableTdEnd(FILE* file);
 void writeTableTrBeginning(FILE* file);
 void writeTableTrEnd(FILE* file);
 void writeInt(FILE* file, int x);
+void writeFloat(FILE* file, float x);
 void writeChar(FILE* file, char c);
 
 

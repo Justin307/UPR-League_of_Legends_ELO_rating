@@ -26,9 +26,8 @@ bool checkPlayerFileStructure(char* fileName)
     int id = 0;
     char nickname[100];
     int fsOutput;
-    bool firstLine = true;
 
-    while(true)
+    while(!feof(file))
     {
         /*
          * fscanf return number of items successfully matched
@@ -38,15 +37,8 @@ bool checkPlayerFileStructure(char* fileName)
         */
         fsOutput = fscanf(file,"%d,%s",&id, nickname);
 
-        // empty file
         if(fsOutput == -1)
         {
-            if(firstLine == true)
-            {
-                printf("File is empty");
-                fclose(file);
-                return false;
-            }
             break;
         }
 
@@ -66,13 +58,8 @@ bool checkPlayerFileStructure(char* fileName)
         }
 
         //test printf
-        printf("%d - %s - %d\n", id,nickname, strlen(nickname));
+        printf("%d - %s - %ld\n", id,nickname, strlen(nickname));
 
-        //not first line anymore
-        if(firstLine == true)
-        {
-            firstLine = false;
-        }
     }
     fclose(file);
     return true;
@@ -99,9 +86,8 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
     int kad[2 * 9];
     char color[20];
     int fsOutput[6];
-    bool firstLine = true;
 
-    while(true)
+    while(!feof(file))
     {
         /*
          * fscanf return number of items successfully matched
@@ -116,13 +102,8 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
         fsOutput[4] = fscanf(file, "%d;%d;%d,%d;%d;%d,%d;%d;%d", &kad[9], &kad[10], &kad[11], &kad[12], &kad[13], &kad[14], &kad[15], &kad[16], &kad[17]);
         fsOutput[5] = fscanf(file,"%s",color);
 
-        // empty file
-        if (fsOutput[0] == -1) {
-            if (firstLine == true) {
-                printf("File is empty");
-                fclose(file);
-                return false;
-            }
+        if (fsOutput[0] == -1 || fsOutput[1] == -1|| fsOutput[2] == -1|| fsOutput[3] == -1|| fsOutput[4] == -1|| fsOutput[5] == -1)
+        {
             break;
         }
 
@@ -178,11 +159,6 @@ bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers)
             return false;
         }
 
-        //not first line
-        if(firstLine == true)
-        {
-            firstLine = false;
-        }
     }
     fclose(file);
     return true;
@@ -206,7 +182,7 @@ bool checkIDExistence(char* fileName, const int ids[6])
         return false;
     }
 
-    playersCount = fileLines(fileName);
+    playersCount = countPlayers(fileName);
     playerIds = (int*) malloc(sizeof(int) * playersCount);
 
     char temp[100];
@@ -238,6 +214,33 @@ bool checkIDExistence(char* fileName, const int ids[6])
     free(playerIds);
     playerIds = NULL;
     return true;
+}
+
+int countPlayers(char* fileName)
+{
+    FILE* file = fopen(fileName,"r");
+    if(!file)
+    {
+        printf("File could not be opened");
+        return false;
+    }
+
+    int id = 0;
+    char nickname[17];
+    int fsOutput;
+    int playerCount = 0;
+
+    while(!feof(file))
+    {
+        fsOutput = fscanf(file,"%d,%s",&id, nickname);
+
+        if(fsOutput == 2)
+        {
+            playerCount++;
+        }
+    }
+    fclose(file);
+    return playerCount;
 }
 
 void initializePlayers(Player* players, int playerCount, char* fileName)
@@ -300,15 +303,13 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
     int kad[2*9];
     char color[5];
     int playerStructID = 0;
-    int opponentsELO;
-    int playerELO;
+    float redELO;
+    float blueELO;
+    float playerELO;
     int didHeWon;
     int coefficient = 30;
     float playerMatchELO;
 
-
-
-    //TODO SECURE MATCH COUNT
     while(matchesRemaining != 0)
     {
         fscanf(file,"%s",match);
@@ -318,6 +319,9 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
         fscanf(file, "%d;%d;%d,%d;%d;%d,%d;%d;%d", &kad[9], &kad[10], &kad[11], &kad[12], &kad[13], &kad[14], &kad[15], &kad[16], &kad[17]);
         fscanf(file,"%s",color);
         matchesRemaining--;
+
+        redELO = (getELOOfPlayer(ids[0],players,playerCount) + getELOOfPlayer(ids[1],players,playerCount) + getELOOfPlayer(ids[2],players,playerCount)) / 3.0;
+        blueELO = (getELOOfPlayer(ids[3],players,playerCount) + getELOOfPlayer(ids[4],players,playerCount) + getELOOfPlayer(ids[3],players,playerCount)) / 3.0;
 
         for(int i = 0; i < 6; i++)
         {
@@ -347,9 +351,10 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
                 }
 
                 playerELO = getELOOfPlayer(ids[i],players,playerCount);
-                opponentsELO = (getELOOfPlayer(ids[3],players,playerCount) + getELOOfPlayer(ids[4],players,playerCount) + getELOOfPlayer(ids[3],players,playerCount)) / 3.0;
-                playerMatchELO = 1 / (1 + pow(10,(opponentsELO-playerELO)/400));
-                players[playerStructID].elo = playerELO + coefficient * (didHeWon - playerMatchELO);
+                playerMatchELO = 1.0 / (1 + pow(10.0,(blueELO-playerELO)/400));
+                int new_elo = round(playerELO + coefficient * (didHeWon - playerMatchELO));
+                players[playerStructID].elo = new_elo;
+                printf("Player ID: %d - Elo: %d\n", players[playerStructID].id, new_elo);
 
             }
             else
@@ -365,11 +370,13 @@ void updatePlayersFromMatchFile(Player *players,int playerCount, char* fileName)
                 }
 
                 playerELO = getELOOfPlayer(ids[i],players,playerCount);
-                opponentsELO = (getELOOfPlayer(ids[0],players,playerCount) + getELOOfPlayer(ids[1],players,playerCount) + getELOOfPlayer(ids[2],players,playerCount)) / 3.0;
-                playerMatchELO = 1 / (1 + pow(10,(opponentsELO-playerELO)/400));
-                players[playerStructID].elo = playerELO + coefficient * (didHeWon - playerMatchELO);
+                playerMatchELO = 1 / (1 + pow(10.0,(redELO-playerELO)/400));
+                int new_elo = round(playerELO + coefficient * (didHeWon - playerMatchELO));
+                players[playerStructID].elo = new_elo;
+                printf("Player ID: %d - Elo: %d\n", players[playerStructID].id, new_elo);
             }
         }
+        printf("************************\n");
     }
 
     fclose(file);
@@ -417,6 +424,7 @@ bool createPlayerHTMLFile(char* fileName, Player* players, int playerCount)
     writeTableTh(file,"ELO rating");
     writeTableTh(file,"Division");
     writeTableTh(file,"K/D/A");
+    writeTableTh(file,"KDA");
     writeTableTh(file,"Match won/played");
     writeTableTh(file,"Team red/blue");
     writeTableMiddle(file);
@@ -443,6 +451,14 @@ bool createPlayerHTMLFile(char* fileName, Player* players, int playerCount)
         writeInt(file,players[i].deaths);
         writeChar(file,'/');
         writeInt(file,players[i].assists);
+        writeTableTdEnd(file);
+        //KDA
+        writeTableTdBeginning(file);
+        writeFloat(file,(players[i].kills+players[i].assists*1.0)/players[i].deaths);
+        writeChar(file,' ');
+        writeChar(file,':');
+        writeChar(file,' ');
+        writeInt(file,players[i].matchPlayed);
         writeTableTdEnd(file);
         //Match won/played
         writeTableTdBeginning(file);

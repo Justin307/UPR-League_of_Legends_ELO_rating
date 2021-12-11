@@ -20,6 +20,7 @@ typedef struct
 bool checkPlayerFileStructure(char* fileName);
 bool checkGameFileStructure(char* fileNameGames, char* fileNamePlayers);
 bool checkIDExistence(char* fileName, const int ids[]);
+int countPlayers(char* fileName);
 void initializePlayers(Player* players, int playerCount, char* fileName);
 void initializePlayerDefaultValue(Player* player, int id, char* nickname);
 void printPlayersToConsole(Player *players,int playerCount);
